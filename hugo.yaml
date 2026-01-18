@@ -1,0 +1,49 @@
+baseURL: "https://aizhe99.github.io/"
+languageCode: zh-cn
+title: 周记
+theme: PaperMod
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+# PaperMod 核心参数
+params:
+  env: production
+  title: 周记
+  description: "一次性人生"
+  keywords: [Blog, Tech, Life]
+  author: Me
+  
+  # 默认主题模式 (auto/dark/light)
+  defaultTheme: auto
+  
+  # 首页显示的个人信息模块 (Home Info Mode)
+  # 必须配置此项，否则首页会空白
+  homeInfoParams:
+    Title: "你好 👋"
+    Content: "欢迎来到我的 PaperMod 博客"
+
+  # 社交图标示例
+  socialIcons:
+    - name: github
+      url: "https://github.com/aizhe99"
+
+# 菜单配置
+menu:
+  main:
+    - identifier: categories
+      name: 分类
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: 标签
+      url: /tags/
+      weight: 20
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 30
+
+publishDir: "docs"
