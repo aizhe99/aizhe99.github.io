@@ -51,3 +51,11 @@ params:
   # homeInfoParams:
   #   Title: "你好"
   #   Content: "..."
+
+# Hugo 日期提取策略配置
+frontmatter:
+  date:
+    # 优先级 1: 从文件名提取 (对应 Jekyll 风格的 YYYY-MM-DD-slug.md)
+    - :filename
+    # 优先级 2: 如果文件名没有日期，则读取 Front Matter 中的 date 字段
+    - :default
