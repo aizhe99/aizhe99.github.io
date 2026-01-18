@@ -22,7 +22,6 @@ menu:
       name: 归档
       url: /archives/
       weight: 30
-    # 解决方案2：将RSS放入菜单栏，因为列表模式下不显示中间的社交图标
     - identifier: rss
       name: RSS
       url: /index.xml
@@ -34,12 +33,12 @@ params:
   description: "一次性人生"
   keywords: [Blog, Tech, Life]
   author: Me
-  defaultTheme: auto
+  defaultTheme: auto 
 
-  # 解决方案3：确保缩进严格为2个空格。
-  # PaperMod会直接渲染此字符串，支持HTML。
-  # 如果你想显示 "© 2026 一次性人生"，请使用下面的写法：
-  copyright: "&copy; 2026 一次性人生"
+  footer:
+    text: "一次性人生"
+    copyright: "&copy; 2026 一次性人生"
+    hideCopyright: false
 
   # 注意：socialIcons 在禁用了 homeInfoParams 后，默认不会在首页显示。
   # 保留此配置仅用于侧边栏或启用了Profile模式的情况。
