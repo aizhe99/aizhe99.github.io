@@ -36,8 +36,8 @@ params:
   defaultTheme: auto 
 
   footer:
-    text: "一次性人生"
-    copyright: "&copy; 2026 一次性人生"
+    text: "人生只有一次，有些事要抓紧，有些事要放开。"
+    # copyright: "&copy; 2026 一次性人生"
     hideCopyright: false
 
   # 注意：socialIcons 在禁用了 homeInfoParams 后，默认不会在首页显示。
