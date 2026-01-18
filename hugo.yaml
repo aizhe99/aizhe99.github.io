@@ -46,4 +46,4 @@ menu:
       url: /archives/
       weight: 30
 
-publishDir: "docs"
+# publishDir: "docs"
