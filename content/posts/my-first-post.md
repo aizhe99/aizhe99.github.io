@@ -2,7 +2,7 @@
 date: '2026-01-18T05:06:05Z'
 draft: false
 title: 'My First Post'
-tags: 'test','测试'
+tags: ['test','测试']
 ---
 Test
 测试
