@@ -8,33 +8,6 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-# PaperMod 核心参数
-params:
-  env: production
-  title: 周记
-  description: "一次性人生"
-  keywords: [Blog, Tech, Life]
-  author: Me
-  
-  # 默认主题模式 (auto/dark/light)
-  defaultTheme: auto
-  
-  # 首页显示的个人信息模块 (Home Info Mode)
-  # 已注释掉，以确保首页直接显示文章列表
-  # homeInfoParams:
-  #   Title: "你好 👋"
-  #   Content: "欢迎来到我的 PaperMod 博客"
-
-  # 底部版权信息
-  copyright: "一次性人生"
-
-  # 社交图标配置
-  # 修改为仅显示 RSS 订阅按钮
-  socialIcons:
-    - name: rss
-      url: "https://aizhe99.github.io/index.xml"
-
-# 菜单配置
 menu:
   main:
     - identifier: categories
@@ -49,3 +22,32 @@ menu:
       name: 归档
       url: /archives/
       weight: 30
+    # 解决方案2：将RSS放入菜单栏，因为列表模式下不显示中间的社交图标
+    - identifier: rss
+      name: RSS
+      url: /index.xml
+      weight: 40
+
+params:
+  env: production
+  title: 周记
+  description: "一次性人生"
+  keywords: [Blog, Tech, Life]
+  author: Me
+  defaultTheme: auto
+
+  # 解决方案3：确保缩进严格为2个空格。
+  # PaperMod会直接渲染此字符串，支持HTML。
+  # 如果你想显示 "© 2026 一次性人生"，请使用下面的写法：
+  copyright: "&copy; 2026 一次性人生"
+
+  # 注意：socialIcons 在禁用了 homeInfoParams 后，默认不会在首页显示。
+  # 保留此配置仅用于侧边栏或启用了Profile模式的情况。
+  socialIcons:
+    - name: rss
+      url: "https://aizhe99.github.io/index.xml"
+
+  # 确保 homeInfoParams 被完全注释或删除，以保证进入列表模式
+  # homeInfoParams:
+  #   Title: "你好"
+  #   Content: "..."
