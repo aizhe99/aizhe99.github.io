@@ -20,15 +20,19 @@ params:
   defaultTheme: auto
   
   # 首页显示的个人信息模块 (Home Info Mode)
-  # 必须配置此项，否则首页会空白
-  homeInfoParams:
-    Title: "你好 👋"
-    Content: "欢迎来到我的 PaperMod 博客"
+  # 已注释掉，以确保首页直接显示文章列表
+  # homeInfoParams:
+  #   Title: "你好 👋"
+  #   Content: "欢迎来到我的 PaperMod 博客"
 
-  # 社交图标示例
+  # 底部版权信息
+  copyright: "一次性人生"
+
+  # 社交图标配置
+  # 修改为仅显示 RSS 订阅按钮
   socialIcons:
-    - name: github
-      url: "https://github.com/aizhe99"
+    - name: rss
+      url: "https://aizhe99.github.io/index.xml"
 
 # 菜单配置
 menu:
@@ -45,5 +49,3 @@ menu:
       name: 归档
       url: /archives/
       weight: 30
-
-# publishDir: "docs"
