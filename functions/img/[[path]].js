@@ -9,7 +9,7 @@ export async function onRequest(context) {
 
   const headers = new Headers();
   headers.set("Content-Type", object.httpMetadata?.contentType || "image/jpeg");
-  headers.set("Cache-Control", "public, max-age=86400");
+  headers.set("Cache-Control", "ublic, max-age=31536000, immutable");
 
   return new Response(object.body, { headers });
 }
