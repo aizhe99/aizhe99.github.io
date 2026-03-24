@@ -8,7 +8,7 @@
       <input
         type="text"
         id="comment-author"
-        placeholder="昵称（选填，留空则显示为「匿名」）"
+        placeholder="留个名字吧（不填则显示为 匿名#随机编号）"
         maxlength="50"
         autocomplete="off"
       />
@@ -51,6 +51,15 @@
 ></script>
 
 <script>
+  function getAnonId() {
+    let id = localStorage.getItem('comment_anon_id');
+    if (!id) {
+      id = Math.random().toString(36).substring(2, 6);
+      localStorage.setItem('comment_anon_id', id);
+    }
+    return id;
+  }
+  
   // ============ 配置区域 ============
   // 将此 URL 改为你的 Worker URL（步骤三中获取的）
   const COMMENT_API = "https://blogapi.aizhe99.workers.dev";
@@ -107,7 +116,7 @@
     const statusEl = document.getElementById("comment-status");
     const submitBtn = document.getElementById("submit-comment");
 
-    const author = /[a-zA-Z0-9\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(authorEl.value) ? authorEl.value.trim() : "";
+    const author = /[a-zA-Z0-9\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(authorEl.value) ? authorEl.value.trim() : "匿名#" + getAnonId();
     const content = contentEl.value.trim();
 
     // 获取 Turnstile token
