@@ -33,7 +33,8 @@ params:
   description: "一次性人生"
   keywords: [Blog, Tech, Life]
   author: Me
-  defaultTheme: auto 
+  defaultTheme: auto
+  comments: true
 
   footer:
     text: "人生只有一次，有些事要抓紧，有些事要放开。"
