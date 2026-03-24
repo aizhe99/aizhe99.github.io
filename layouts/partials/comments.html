@@ -205,9 +205,19 @@
 <style>
   /* ====== 评论区整体容器 ====== */
   #comments-section {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid var(--border);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  }
+  
+  #comment-list {
+    order: 1;
+  }
+  
+  #comment-form {
+    order: 2;
   }
 
   #comments-section h2 {
