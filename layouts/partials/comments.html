@@ -107,7 +107,7 @@
     const statusEl = document.getElementById("comment-status");
     const submitBtn = document.getElementById("submit-comment");
 
-    const author = authorEl.value.trim();
+    const author = /[a-zA-Z0-9\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(authorEl.value) ? authorEl.value.trim() : "";
     const content = contentEl.value.trim();
 
     // 获取 Turnstile token
@@ -117,8 +117,8 @@
     const turnstileToken = turnstileInput ? turnstileInput.value : "";
 
     // 前端校验
-    if (!content) {
-      statusEl.textContent = "⚠ 请输入评论内容。";
+    if (!/[a-zA-Z0-9\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(content)) {
+      statusEl.textContent = "⚠ 请输入有效的评论内容。";
       statusEl.className = "status-error";
       return;
     }
