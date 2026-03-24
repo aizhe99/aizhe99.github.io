@@ -1,6 +1,6 @@
 {{- if .Param "comments" }}
 <div id="comments-section">
-  <h2>评论</h2>
+  <h2>评论 <span id="comment-count"></span></h2>
 
   <!-- 评论提交表单 -->
   <form id="comment-form" onsubmit="return false;">
@@ -86,10 +86,13 @@
 
       const comments = await res.json();
 
+      const countEl = document.getElementById("comment-count");
       if (!comments || comments.length === 0) {
+        countEl.textContent = "";
         container.innerHTML = '<p class="no-comments">暂无评论。</p>';
         return;
       }
+      countEl.textContent = "(" + comments.length + ")";
 
       container.innerHTML = comments
         .map(
@@ -359,6 +362,12 @@
   /* Turnstile 组件间距 */
   .cf-turnstile {
     margin: 0.6rem 0;
+  }
+
+  #comment-count {
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--secondary);
   }
 </style>
 {{- end }}
