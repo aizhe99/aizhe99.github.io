@@ -1,0 +1,345 @@
+{{- if .Param "comments" }}
+<div id="comments-section">
+  <h2>评论</h2>
+
+  <!-- 评论提交表单 -->
+  <form id="comment-form" onsubmit="return false;">
+    <div class="form-group">
+      <input
+        type="text"
+        id="comment-author"
+        placeholder="昵称（选填，留空则显示为「匿名」）"
+        maxlength="50"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-group">
+      <textarea
+        id="comment-content"
+        placeholder="写下你的评论..."
+        rows="4"
+        maxlength="2000"
+        required
+      ></textarea>
+      <div class="char-count"><span id="char-used">0</span> / 2000</div>
+    </div>
+
+    <!-- Turnstile 人机验证组件 -->
+    <div
+      class="cf-turnstile"
+      data-sitekey="0x4AAAAAACvR8o84KJY2lHlX"
+      data-theme="auto"
+    ></div>
+
+    <button type="button" id="submit-comment" onclick="submitComment()">
+      提交评论
+    </button>
+    <div id="comment-status"></div>
+  </form>
+
+  <!-- 评论列表 -->
+  <div id="comment-list">
+    <p class="loading-text">正在加载评论...</p>
+  </div>
+</div>
+
+<!-- Turnstile JS SDK -->
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+></script>
+
+<script>
+  // ============ 配置区域 ============
+  // 将此 URL 改为你的 Worker URL（步骤三中获取的）
+  const COMMENT_API = "https://blogapi.aizhe99.workers.dev";
+  // ============ 配置结束 ============
+
+  // 当前页面的 slug，由 Hugo 在构建时填入
+  const PAGE_SLUG = "{{ .RelPermalink }}";
+
+  // 字符计数
+  document
+    .getElementById("comment-content")
+    .addEventListener("input", function () {
+      document.getElementById("char-used").textContent = this.value.length;
+    });
+
+  // ====== 加载评论 ======
+  async function loadComments() {
+    const container = document.getElementById("comment-list");
+    try {
+      const res = await fetch(
+        `${COMMENT_API}/api/comments?slug=${encodeURIComponent(PAGE_SLUG)}`
+      );
+      if (!res.ok) throw new Error("API error");
+
+      const comments = await res.json();
+
+      if (!comments || comments.length === 0) {
+        container.innerHTML = '<p class="no-comments">暂无评论。</p>';
+        return;
+      }
+
+      container.innerHTML = comments
+        .map(
+          (c) => `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-author">${escapeHtml(c.author)}</span>
+            <span class="comment-time">${formatTime(c.created_at)}</span>
+          </div>
+          <div class="comment-body">${escapeHtml(c.content)}</div>
+        </div>
+      `
+        )
+        .join("");
+    } catch (err) {
+      container.innerHTML = '<p class="load-error">评论加载失败，请刷新重试。</p>';
+    }
+  }
+
+  // ====== 提交评论 ======
+  async function submitComment() {
+    const authorEl = document.getElementById("comment-author");
+    const contentEl = document.getElementById("comment-content");
+    const statusEl = document.getElementById("comment-status");
+    const submitBtn = document.getElementById("submit-comment");
+
+    const author = authorEl.value.trim();
+    const content = contentEl.value.trim();
+
+    // 获取 Turnstile token
+    const turnstileInput = document.querySelector(
+      'input[name="cf-turnstile-response"]'
+    );
+    const turnstileToken = turnstileInput ? turnstileInput.value : "";
+
+    // 前端校验
+    if (!content) {
+      statusEl.textContent = "⚠ 请输入评论内容。";
+      statusEl.className = "status-error";
+      return;
+    }
+
+    if (!turnstileToken) {
+      statusEl.textContent = "⚠ 请等待人机验证完成，或刷新页面重试。";
+      statusEl.className = "status-error";
+      return;
+    }
+
+    // 禁用按钮防止重复提交
+    submitBtn.disabled = true;
+    submitBtn.textContent = "提交中...";
+    statusEl.textContent = "";
+
+    try {
+      const res = await fetch(`${COMMENT_API}/api/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slug: PAGE_SLUG,
+          author: author,
+          content: content,
+          turnstile_token: turnstileToken,
+        }),
+      });
+
+      if (res.ok) {
+        statusEl.textContent = "✓ 评论提交成功。";
+        statusEl.className = "status-success";
+        contentEl.value = "";
+        authorEl.value = "";
+        document.getElementById("char-used").textContent = "0";
+
+        // 重置 Turnstile 以便再次评论
+        if (typeof turnstile !== "undefined") {
+          turnstile.reset();
+        }
+
+        // 重新加载评论列表
+        await loadComments();
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        statusEl.textContent =
+          "✗ 提交失败：" + (errData.error || "未知错误，请稍后重试。");
+        statusEl.className = "status-error";
+      }
+    } catch (err) {
+      statusEl.textContent = "✗ 网络错误，请检查网络后重试。";
+      statusEl.className = "status-error";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "提交评论";
+    }
+  }
+
+  // ====== 工具函数：HTML 转义（防止 XSS 攻击） ======
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ====== 工具函数：格式化时间 ======
+  function formatTime(isoString) {
+    try {
+      const date = new Date(isoString);
+      return date.toLocaleString("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return isoString;
+    }
+  }
+
+  // 页面加载完成后自动加载评论
+  document.addEventListener("DOMContentLoaded", loadComments);
+</script>
+
+<style>
+  /* ====== 评论区整体容器 ====== */
+  #comments-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+  }
+
+  #comments-section h2 {
+    margin-bottom: 1rem;
+  }
+
+  /* ====== 表单样式 ====== */
+  .form-group {
+    margin-bottom: 0.6rem;
+  }
+
+  #comment-form input[type="text"],
+  #comment-form textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--code-bg);
+    color: var(--primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+
+  #comment-form input[type="text"]:focus,
+  #comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  #comment-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .char-count {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin-top: 2px;
+  }
+
+  #submit-comment {
+    margin-top: 0.6rem;
+    padding: 0.55rem 1.8rem;
+    background: var(--primary);
+    color: var(--theme);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+
+  #submit-comment:hover {
+    opacity: 0.8;
+  }
+
+  #submit-comment:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ====== 状态消息 ====== */
+  #comment-status {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 1.4em;
+  }
+
+  .status-success {
+    color: #22c55e;
+  }
+
+  .status-error {
+    color: #ef4444;
+  }
+
+  /* ====== 评论列表 ====== */
+  #comment-list {
+    margin-top: 2rem;
+  }
+
+  .comment-item {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comment-item:last-child {
+    border-bottom: none;
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .comment-author {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.95rem;
+  }
+
+  .comment-time {
+    font-size: 0.8rem;
+    color: var(--secondary);
+  }
+
+  .comment-body {
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--primary);
+    font-size: 0.93rem;
+  }
+
+  .no-comments,
+  .loading-text,
+  .load-error {
+    color: var(--secondary);
+    font-style: italic;
+  }
+
+  /* Turnstile 组件间距 */
+  .cf-turnstile {
+    margin: 0.6rem 0;
+  }
+</style>
+{{- end }}
