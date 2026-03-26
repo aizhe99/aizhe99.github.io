@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 风车的声音-Windmills of Your Mind
+slug: windmills
 excerpt_separator: "<!-- no-excerpt -->"
 tags: [影视,音乐]
 ---
