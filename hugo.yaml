@@ -31,7 +31,7 @@ params:
   env: production
   title: 周记
   description: "一次性人生"
-  keywords: [Blog, Tech, Life]
+  keywords: [Blog, Book, Life, TV]
   author: Me
   defaultTheme: auto
   comments: true
