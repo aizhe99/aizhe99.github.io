@@ -35,6 +35,7 @@ params:
   author: Me
   defaultTheme: auto
   comments: true
+  ShowPostNavLinks: true
 
   footer:
     text: "人生只有一次，有些事要抓紧，有些事要放开。"
