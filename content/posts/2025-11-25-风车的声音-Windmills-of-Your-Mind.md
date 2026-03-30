@@ -1,9 +1,10 @@
 ---
-layout: post
 title: 风车的声音-Windmills of Your Mind
 slug: windmills
-excerpt_separator: "<!-- no-excerpt -->"
-tags: [影视,音乐]
+excerpt_separator: <!-- no-excerpt --> 
+draft: false 
+categories: 音乐
+tags: [电影,电视,歌曲]
 ---
 
 我被美剧Severance第二季的结尾深深感动。打动我的，除了感人画面，还有Mel Torme版本的*Windmills of Your Mind*。
