@@ -36,6 +36,8 @@ params:
   defaultTheme: auto
   comments: true
   ShowPostNavLinks: true
+  ShowReadingTime: true
+  ShowWordCount: true
 
   footer:
     text: "人生只有一次，有些事要抓紧，有些事要放开。"
