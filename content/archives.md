@@ -3,6 +3,6 @@ title: "Archive"
 layout: "archives"
 url: "/archives/"
 summary: archives
-_build:
+build:
   list: never
 ---
