@@ -28,6 +28,10 @@ menu:
       name: RSS
       url: /index.xml
       weight: 40
+    - identifier: search
+      name: 搜索
+      url: /index.xml
+      weight: 50
 
 params:
   env: production
@@ -41,6 +45,15 @@ params:
   ShowReadingTime: false
   ShowWordCount: true
 
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
   footer:
     text: "人生只有一次，有些事要抓紧，有些事要放开。"
     # copyright: "&copy; 2026 一次性人生"
@@ -50,7 +63,7 @@ params:
   # 保留此配置仅用于侧边栏或启用了Profile模式的情况。
   socialIcons:
     - name: rss
-      url: "https://aizhe99.github.io/index.xml"
+      url: "https://ablog.v6.rocks/index.xml"
 
   # 确保 homeInfoParams 被完全注释或删除，以保证进入列表模式
   # homeInfoParams:
@@ -64,3 +77,9 @@ frontmatter:
     - :filename
     # 优先级 2: 如果文件名没有日期，则读取 Front Matter 中的 date 字段
     - :default
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
