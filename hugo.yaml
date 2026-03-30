@@ -21,16 +21,16 @@ menu:
       url: /tags/
       weight: 20
     - identifier: archives
-      name: 归档
+      name: 全部文章
       url: /archives/
       weight: 30
-    - identifier: rss
-      name: RSS
-      url: /index.xml
-      weight: 40
     - identifier: search
       name: 搜索
       url: /search/
+      weight: 40
+    - identifier: rss
+      name: RSS
+      url: /index.xml
       weight: 50
 
 params:
