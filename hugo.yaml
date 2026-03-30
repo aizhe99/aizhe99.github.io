@@ -38,7 +38,7 @@ params:
   defaultTheme: auto
   comments: true
   ShowPostNavLinks: true
-  ShowReadingTime: true
+  ShowReadingTime: false
   ShowWordCount: true
 
   footer:
