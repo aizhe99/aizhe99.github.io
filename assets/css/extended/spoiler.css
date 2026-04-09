@@ -1,0 +1,24 @@
+/* ===== Spoiler 黑条遮盖 ===== */
+.spoiler-text {
+  background-color: var(--primary);   /* 利用 PaperMod 的主题变量，深浅模式自适应 */
+  color: transparent;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 3px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;                  /* 防止全选时泄露文字 */
+  -webkit-user-select: none;
+}
+
+/* 已点击显示状态 */
+.spoiler-text.revealed {
+  background-color: transparent;
+  color: inherit;
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+/* 可选：鼠标悬停时给出"可交互"的视觉暗示，但不直接显示文字 */
+.spoiler-text:not(.revealed):hover {
+  opacity: 0.8;
+}
