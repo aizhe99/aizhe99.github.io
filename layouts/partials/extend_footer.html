@@ -1,1 +1,11 @@
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dd940c3c28704fff9260c060a21df0a4"}'></script><!-- End Cloudflare Web Analytics -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.spoiler-text').forEach(function (el) {
+    el.addEventListener('click', function () {
+      this.classList.toggle('revealed');
+    });
+  });
+});
+</script>
