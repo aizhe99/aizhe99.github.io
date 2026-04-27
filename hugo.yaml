@@ -1,5 +1,6 @@
 baseURL: "https://ablog.v6.rocks/"
-languageCode: zh
+# languageCode: zh
+defaultContentLanguage: zh
 title: 周记
 theme: PaperMod
 
