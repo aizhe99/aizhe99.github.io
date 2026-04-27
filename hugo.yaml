@@ -39,7 +39,7 @@ params:
   title: 周记
   description: "一次性人生"
   keywords: [Blog, Book, Life, TV]
-  author: 不知
+  author: 我
   defaultTheme: auto
   comments: true
   ShowPostNavLinks: true
