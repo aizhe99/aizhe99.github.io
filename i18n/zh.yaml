@@ -1,5 +1,5 @@
 - id: prev_page
-  translation: "← 较新文章 (Newer)"
+  translation: "较新文章"
 
 - id: next_page
-  translation: "较旧文章 (Older) →"
+  translation: "较旧文章"
