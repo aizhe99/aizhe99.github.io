@@ -45,6 +45,7 @@ params:
   ShowPostNavLinks: true
   ShowReadingTime: false
   ShowWordCount: true
+  ShowFullTextContent: true
 
   assets:
     favicon: "/favicon.ico"
