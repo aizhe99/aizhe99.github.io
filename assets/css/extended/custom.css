@@ -1,5 +1,0 @@
-/* 让剧透/正文链接浮于卡片整体点击层之上，避免首次点击被 entry-link 截获 */
-.post-entry .post-content {
-    position: relative;
-    z-index: 2;
-}
