@@ -11,6 +11,9 @@ buildExpired: false
 
 hasCJKLanguage: true
 
+pagination:
+  pagerSize: 5
+
 menu:
   main:
     - identifier: categories
