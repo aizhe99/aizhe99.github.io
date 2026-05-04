@@ -50,6 +50,7 @@ params:
   ShowWordCount: true
   ShowFullTextContent: true
   ShowLastMod: true
+  disableSpecial1stPost: true
 
   assets:
     favicon: "/favicon.ico"
