@@ -46,6 +46,7 @@ params:
   ShowReadingTime: false
   ShowWordCount: true
   ShowFullTextContent: true
+  ShowLastMod: true
 
   assets:
     favicon: "/favicon.ico"
