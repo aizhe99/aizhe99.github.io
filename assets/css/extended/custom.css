@@ -1,0 +1,8 @@
+/* 列表页显示全文：解除行数与高度限制 */
+.post-entry .entry-content {
+    -webkit-line-clamp: unset;
+    display: block;
+    max-height: none;
+    overflow: visible;
+    text-overflow: clip;
+}
