@@ -1,8 +1,20 @@
-/* 列表页显示全文：解除行数与高度限制 */
-.post-entry .entry-content {
+/* 解除列表页文章正文的视觉截断 */
+.post-entry .post-content {
     -webkit-line-clamp: unset;
     display: block;
     max-height: none;
     overflow: visible;
-    text-overflow: clip;
+}
+
+/* 让剧透等交互元素浮于卡片点击层之上 */
+.post-entry .post-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* 文章之间增加分隔 */
+.post-entry { 
+    margin-bottom: 60px; 
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
 }
