@@ -22,3 +22,8 @@
 .spoiler-text:not(.revealed):hover {
   opacity: 0.8;
 }
+
+.post-entry .post-content .spoiler-text {
+    position: relative;
+    z-index: 3;
+}
