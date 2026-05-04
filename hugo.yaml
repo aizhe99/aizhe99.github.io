@@ -85,7 +85,8 @@ params:
 frontmatter:
   date:
     - :filename  # 优先从文件名提取 (对应 Jekyll 风格的 YYYY-MM-DD-slug.md)
-    - :default   # 如果文件名没有日期，则读取 Front Matter 中的 date 字段
+    - date
+    # - :default   # 如果文件名没有日期，则读取 Front Matter 中的 date 字段
   lastmod:     # 定义编辑日期的读取逻辑
     - lastmod    # 优先读取手动在 MD 里增加的 lastmod 字段
     - :default   # 如果没有手动写，则默认等同于发布日期
